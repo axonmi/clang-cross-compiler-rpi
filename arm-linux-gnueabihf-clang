@@ -10,7 +10,7 @@ compiler_path="${sysroot}/usr/lib/gcc/${target}/6"
 CLANG=clang
 if [ $(uname -s) == "Darwin" ]
 then
-  CLANG=${sdk_base}/host/bin/clang
+  CLANG=${sdk_base}/host/clang/bin/clang
 fi
 
 export PATH=$sdk_base/host/bin:$PATH
