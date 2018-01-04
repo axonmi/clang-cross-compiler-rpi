@@ -4,7 +4,7 @@
 ## Quick start
 Run `./generate_sdk.sh -s <SDK_PATH>`. This will generate the clang based cross compiler in that directory. You can test by:
 
-    arm-linux-agnueabihf-clang -o testc test.c
+    arm-linux-agnueabihf-clang -o testc test.c -lm
     arm-linux-gnueabihf-clang++ -o testcc test.cc
 
 Then copy the files onto raspberry pi and execute.
