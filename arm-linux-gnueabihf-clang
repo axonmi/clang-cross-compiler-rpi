@@ -1,0 +1,25 @@
+#!/bin/bash
+set -e
+script_path="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+# This file is in host/bin
+sdk_base="${script_path}/../.."
+sysroot="${sdk_base}/sysroot"
+target=arm-linux-gnueabihf
+compiler_path="${sysroot}/usr/lib/gcc/${target}/6"
+
+CLANG=clang
+if [ $(uname -s) == "Darwin" ]
+then
+  CLANG=${sdk_base}/host/bin/clang
+fi
+
+export PATH=$sdk_base/host/bin:$PATH
+export COMPILER_PATH=${compiler_path}
+
+$CLANG \
+  --target=${target} \
+  --sysroot="${sysroot}" \
+  -isysroot "${sysroot}" \
+  -L"${compiler_path}" \
+  --gcc-toolchain="${script_path}" \
+  "$@"
