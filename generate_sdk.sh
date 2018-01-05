@@ -3,13 +3,12 @@
 set -e
 
 SYSROOT_DOWNLOAD_PATH="https://storage.googleapis.com/axon-artifacts/sysroot-stretch-9.1-20180104-2.tar.gz"
-OSX_CLANG_DOWNLOAD_PATH="https://storage.googleapis.com/axon-artifacts/clang%2Bllvm-5.0.1-x86_64-apple-darwin.tar.gz"
 BINUTILS_DOWNLOAD_PATH="https://ftp.gnu.org/gnu/binutils/binutils-2.28.tar.bz2"
-usage="$(basename "$0") [-h] -d <directory_of_sdk> -- This script generates the SDK directory for Raspberry Pi that can be used to compile C/C++ programs using clang.
+usage="$(basename "$0") [-h] -s <directory_of_sdk> -- This script generates the SDK directory for Raspberry Pi that can be used to compile C/C++ programs using clang.
 
 where:
     -h  show this help text
-    -d  The directory where the SDK should be generated"
+    -s  The directory where the SDK should be generated"
 
 sdk_output_dir=""
 while getopts ':hs:' option; do
@@ -55,16 +54,6 @@ mkdir -p "${sdk_host_output_dir}"
 mkdir -p "${sdk_sysroot_output_dir}"
 
 system_name=$(uname -s)
-
-# Darwin needs clang download.
-if [ "${system_name}" == "Darwin" ]
-then
-  mkdir -p "${sdk_host_output_dir}/clang"
-
-  pushd "${sdk_host_output_dir}/clang"
-  curl ${OSX_CLANG_DOWNLOAD_PATH} | tar -xz
-  popd
-fi
 
 # Build LD that can target ARM on Linux.
 tmpdir=$(mktemp -d)

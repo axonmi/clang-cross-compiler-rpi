@@ -8,17 +8,15 @@ target=arm-linux-gnueabihf
 compiler_path="${sysroot}/usr/lib/gcc/${target}/6"
 
 CLANG=clang++
-if [ $(uname -s) == "Darwin" ]
-then
-  CLANG=${sdk_base}/host/clang/bin/clang++
-fi
 
 export PATH=$sdk_base/host/bin:$PATH
 export COMPILER_PATH=${compiler_path}
 
 $CLANG \
   --target=${target} \
+  -B "${sdk_base}/host/bin" \
   --sysroot="${sysroot}" \
   -isysroot "${sysroot}" \
   -L"${compiler_path}" \
+  -gcc-toolchain "${sysroot}/usr"\
   "$@"
